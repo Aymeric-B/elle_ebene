@@ -59,7 +59,7 @@ pypi:
 # ----------------------------------
 
 run_locally:
-	@python -m api.hairapi.py
+	@python -m elle_ebene.trainer
 
 gcp_submit_training:
 	gcloud ai-platform jobs submit training ${JOB_NAME} \
@@ -70,3 +70,6 @@ gcp_submit_training:
 		--runtime-version=${RUNTIME_VERSION} \
 		--region ${REGION} \
 		--stream-logs
+
+run_api:
+	uvicorn api.hairapi:app --reload

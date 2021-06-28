@@ -19,7 +19,7 @@ app.add_middleware(
 
 @app.get("/")
 def index():
-    return dict(greeting="hello")
+    return dict(Greeting="Bonjour les cheveux texturés !")
 
 
 @app.get("/predict")
