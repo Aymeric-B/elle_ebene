@@ -57,6 +57,12 @@ pypi:
 # ----------------------------------
 #      TEST API
 # ----------------------------------
+JOB_NAME=<JOB_NAME>
+BUCKET_NAME=<BUCKET_NAME>
+BUCKET_TRAINING_FOLDER=<BUCKET_TRAINING_FOLDER>
+PACKAGE_NAME=elle_ebene
+FILENAME=trainer
+REGION=europe-west1
 
 run_locally:
 	@python -m elle_ebene.trainer
@@ -68,7 +74,7 @@ gcp_submit_training:
 		--module-name ${PACKAGE_NAME}.${FILENAME} \
 		--python-version=${PYTHON_VERSION} \
 		--runtime-version=${RUNTIME_VERSION} \
-		--region ${REGION} \
+		--region europe-west1 \
 		--stream-logs
 
 run_api:
