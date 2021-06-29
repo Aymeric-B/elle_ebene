@@ -7,7 +7,7 @@ Ce fichier doit contenir toutes les fonctions de preprocessing 'simple' des imag
 - générer un dataset mélangé avec des lables
 """
 
-from elle_ebene.params import RESIZING_DIM
+from elle_ebene.params import RESIZING_DIM, COLOR_BACKGROUND
 import os
 from PIL import Image
 import numpy as np
