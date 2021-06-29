@@ -7,6 +7,7 @@ Ce fichier doit contenir toutes les fonctions de preprocessing 'simple' des imag
 - générer un dataset mélangé avec des lables
 """
 
+from elle_ebene.params import RESIZING_DIM
 import os
 from PIL import Image
 import numpy as np
@@ -27,7 +28,7 @@ def resize_img(img, resizing_dim):
         img_ = img.resize((resizing_dim, new_height), Image.ANTIALIAS)
     return img_
 
-def get_images(folder_name, resizing_dim = 500, valid_images = [".jpg",".jpeg",".png"], path = "/home/aymeric/code/Aymeric-B/elle_ebene/raw_data"):
+def get_images(folder_name, resizing_dim = RESIZING_DIM, valid_images = [".jpg",".jpeg",".png"], path = "/home/aymeric/code/Aymeric-B/elle_ebene/raw_data"):
     """
     Give the folder name (in raw_data) to get all images from this folder.
     """

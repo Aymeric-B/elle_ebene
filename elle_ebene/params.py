@@ -1,8 +1,12 @@
 #params.py
 #Fichier  de paramètres
 
+# Pre-processing parameters
+RESIZING_DIM =  500
+
 # Experiment name for MLFolow system
 EXPERIMENT_NAME = "[FR] [Lyon] [myr-aym-lou] elle_ebene_baseline V0"
+MLFLOW_URI = "https://mlflow.lewagon.co/"
 
 # GCP parameters
 BUCKET_NAME = "elle_ebene_bucket"
