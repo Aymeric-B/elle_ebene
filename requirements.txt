@@ -8,7 +8,9 @@ wheel>=0.29
 numpy
 pandas
 scikit-learn
+tensorflow
 matplotlib
+
 
 # tests/linter
 black
