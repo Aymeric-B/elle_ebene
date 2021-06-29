@@ -53,7 +53,7 @@ def to_numpy_rgb(list_imgs):
         imgs_rgb.append(np.array(img)[:,:,:3])
     return imgs_rgb
 
-def squared_imgs(list_imgs, fill_color = [255,255,255]):
+def squared_imgs(list_imgs, fill_color = COLOR_BACKGROUND):
     """
     transform a list of images of various sizes (but with a common max dimension) into sqaured images
     the backround is filled with the given color
@@ -102,3 +102,6 @@ def unison_shuffled_copies(a, b):
     assert len(a) == len(b)
     p = np.random.permutation(len(a))
     return a[p], b[p]
+
+def normalize(img):
+    return img / 255
