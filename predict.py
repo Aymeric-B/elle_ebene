@@ -9,7 +9,7 @@ def baseline(img):
     prends en entrée une image sous format PIL Image
     """
     model = initialize_model()
-    model.load_weights("/home/aymeric/code/Aymeric-B/elle_ebene/model_weights/baseline")
+    model.load_weights("/home/aymeric/code/Aymeric-B/elle_ebene/model_weights/baseline/weights")
 
     clean_image = normalize(np.asarray(squared_imgs(to_numpy_rgb([resize_img(img, RESIZING_DIM)]))))
     prediction = np.argmax(model.predict(clean_image), axis = -1)[0]
