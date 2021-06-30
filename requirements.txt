@@ -8,9 +8,10 @@ wheel>=0.29
 numpy == 1.19.5
 pandas
 scikit-learn
-tensorflow
+tensorflow == 2.5.0
 matplotlib
-
+CMake
+dlib
 
 # tests/linter
 black
@@ -32,3 +33,4 @@ six>=1.14
 joblib
 memoized-property
 termcolor
+opencv-python
