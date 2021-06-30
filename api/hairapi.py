@@ -1,14 +1,13 @@
-import pandas as pd
-import numpy as np
-import joblib
+from predict import baseline
 
-from elle_ebene.simple_preprocessing import resize_img, to_numpy_rgb, squared_imgs
-from elle_ebene.params import RESIZING_DIM
+from PIL import Image
 
-import requests
-
-from fastapi import FastAPI
+from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+
+from io import BytesIO
+
+# from PIL import Image
 
 app = FastAPI()
 
@@ -25,29 +24,37 @@ def index():
     return dict(Greeting="Bonjour les cheveux texturés !")
 
 
-@app.get("/predict")
-def predict(image):
+# @app.get("/predict")
+# def predict(image):
     
+#     #image = Image.open(path)
     
-    # pre-pre-processing
-    resizing_dim = RESIZING_DIM
-    image = resize_img(image, resizing_dim)
-    images = to_numpy_rgb([image])
-    image_squared = squared_imgs(images, fill_color = [255,255,255])
-    image = np.asarray(image_squared)
-    image = image / 255
+#     # Call to predict function
+#     pred = baseline(image)
+
+#     # Traitement de la prédiction
+#     if pred == 1:
+#         type = "type 4"
+#     else:
+#         type = "type 3"
     
-    # pipeline = get_model_from_gcp()
-    pipeline = joblib.load('model.joblib')
+#     return dict(prediction=type)
 
-    # make prediction
-    pred = np.argmax(pipeline.predict(image) , axis = -1)[0]
+@app.post("/predict")
+async def predict(file: UploadFile = File(...)):
+    image = await file.read()
+    
+    return {"filetype": file.file.}
+    
+    # Call to predict function
+    pred = baseline(image)
+    
 
-    # récupérer la prédiction de predict.py
-
+    # Traitement de la prédiction
     if pred == 1:
         type = "type 4"
     else:
         type = "type 3"
     
     return dict(prediction=type)
+    
