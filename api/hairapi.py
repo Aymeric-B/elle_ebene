@@ -42,6 +42,9 @@ def predict(image):
 
     # make prediction
     pred = np.argmax(pipeline.predict(image) , axis = -1)[0]
+
+    # récupérer la prédiction de predict.py
+
     if pred == 1:
         type = "type 4"
     else:
