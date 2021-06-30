@@ -4,6 +4,7 @@
 # Pre-processing parameters
 RESIZING_DIM =  500
 COLOR_BACKGROUND = [255,255,255] #white
+VALID_IMAGES = [".jpg",".jpeg",".png"]
 
 # Experiment name for MLFolow system
 EXPERIMENT_NAME = "[FR] [Lyon] [myr-aym-lou] elle_ebene_baseline V0"
