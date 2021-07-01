@@ -62,7 +62,9 @@ BUCKET_NAME=<BUCKET_NAME>
 BUCKET_TRAINING_FOLDER=<BUCKET_TRAINING_FOLDER>
 PACKAGE_NAME=elle_ebene
 FILENAME=trainer
-REGION=europe-west1
+GCR_REGION=europe-west1
+GCP_PROJECT_ID=elle-ebene-project
+DOCKER_IMAGE_NAME=elle_ebene_docker
 
 run_locally:
 	@python -m elle_ebene.trainer
@@ -77,5 +79,17 @@ gcp_submit_training:
 		--region europe-west1 \
 		--stream-logs
 
-run_api:
-	uvicorn api.hairapi:app --reload
+run_streamlit:
+	streamlit run Website/app.py
+
+build_docker_local:
+	docker build -t $(DOCKER_IMAGE_NAME) .
+
+run_docker_local:
+	open http://localhost:8501/
+	docker run -p 8501:8501 $(DOCKER_IMAGE_NAME)
+
+docker_gcp:
+	docker build -t GCR_REGION/GCP_PROJECT_ID/DOCKER_IMAGE_NAME .
+	docker push GCR_REGION/GCP_PROJECT_ID/DOCKER_IMAGE_NAME
+
