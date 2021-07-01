@@ -18,7 +18,7 @@ class Predict():
         """
         if self.model_type == "baseline":
             self.pipeline = initialize_model()
-            self.pipeline.load_weights("../model_weights/baseline/weights")
+            self.pipeline.load_weights("model_weights/baseline/weights")
 
 
     def predict(self, img):

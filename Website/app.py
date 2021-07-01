@@ -1,5 +1,4 @@
 import streamlit as st
-import requests
 from collections import Counter
 from PIL import Image
 import sys
