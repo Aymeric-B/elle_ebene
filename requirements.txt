@@ -30,7 +30,7 @@ joblib
 memoized-property
 termcolor
 opencv-python
-import pywt
+PyWavelets
 
 # Website
 streamlit
