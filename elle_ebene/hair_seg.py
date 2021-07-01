@@ -16,7 +16,7 @@ class HairSegmenter():
         self.model = None
         
 
-    def model_init(self, path = "model_weights/hair_seg/weights"):
+    def model_init(self, path = "raw_data/hair_seg/weights"):
         """
         Initialize the model
         by default path = relative path for the website
