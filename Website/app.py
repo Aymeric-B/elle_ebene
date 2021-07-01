@@ -9,6 +9,8 @@ from elle_ebene.predict import baseline
 st.markdown("""# Découvrez le type de votre chevelure""")
 
 result_list = []
+image_list = []
+titres = []
 
 # Upload images
 for i in range(3):
@@ -20,8 +22,13 @@ for i in range(3):
     if uploaded_file is not None:
         image = Image.open(uploaded_file)
         result = baseline(image)
+        st.write(result)
         result_list.append(result)
+        image_list.append(image)
+        titres.append(f"image{i+1}")
         st.image(image)
+        
+#st.image(image_list, width=200, caption=titres)
 
 if st.button("Lancez la recherche"):
 
@@ -37,9 +44,16 @@ if st.button("Lancez la recherche"):
             result = "type 3"
         else:
             result = "type 4"
-            
-        st.write("Votre chevelure est de ", result)
+        
+        chevelure = "Votre chevelure est de " + result    
+        
+        if sum(result_list) == 0 or sum(result_list) == 3:
+            st.success(chevelure)
+        else:
+            st.warning(chevelure)
         
     else:
-        st.write(f'Il manque {3-len(image_list)} photo(s). Veuillez en télécharger')
+        st.error(f'Il manque {3-len(image_list)} photo(s). Veuillez en télécharger')
+        
+    st.write(result_list)
     
