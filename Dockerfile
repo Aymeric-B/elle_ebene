@@ -1,10 +1,11 @@
 FROM python:3.8.6-buster
 
-COPY api /hairapi
+COPY Website /Website
 COPY elle_ebene /elle_ebene
-COPY model.joblib /model.joblib
+COPY model_weights /model_weights
 COPY requirements.txt /requirements.txt
 
+RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
-CMD uvicorn api.fast:app --host 0.0.0.0 --port $PORT
+CMD streamlit run Website/app.py

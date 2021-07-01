@@ -10,8 +10,6 @@ pandas
 scikit-learn
 tensorflow == 2.5.0
 matplotlib
-CMake
-dlib
 
 # tests/linter
 black
@@ -25,8 +23,6 @@ gcsfs
 google-cloud-storage
 mlflow
 s3fs
-fastapi
-uvicorn
 
 # utilities
 six>=1.14
@@ -34,3 +30,6 @@ joblib
 memoized-property
 termcolor
 opencv-python
+
+# Website
+streamlit
