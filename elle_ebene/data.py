@@ -1,6 +1,5 @@
-from elle_ebene.simple_preprocessing import get_images, to_numpy_rgb, squared_imgs, normalize
+from elle_ebene.utils.simple_preprocessing import get_images, to_numpy_rgb, squared_imgs, normalize, create_dataset
 import numpy as np
-from elle_ebene.simple_preprocessing import create_dataset
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.utils import to_categorical
 
