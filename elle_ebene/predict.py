@@ -12,21 +12,24 @@ class Predict():
         self.pipeline = None
         self.model_type = model_type
 
-    def model_init(self):
+    def model_init(self, path = "../model_weights/baseline/weights"):
         """
         Initialize the model
+        by default path = relative path for the website
         """
         if self.model_type == "baseline":
             self.pipeline = initialize_model()
-            self.pipeline.load_weights("../model_weights/baseline/weights")
+            self.pipeline.load_weights(path)
 
 
-    def predict(self, img):
+    def predict(self, imgs):
         """
-        prends en entrée une image sous format PIL Image
+        prends en entrée une image ou liste d'images sous format PIL Image
         """
-
-        clean_image = normalize(np.asarray(squared_imgs(to_numpy_rgb([resize_img(img, RESIZING_DIM)]))))
-        prediction = np.argmax(self.pipeline.predict(clean_image), axis = -1)[0]
-
+        if isinstance(imgs, list):
+            clean_image = normalize(np.asarray(squared_imgs(to_numpy_rgb([resize_img(img, RESIZING_DIM) for img in imgs]))))
+            prediction = np.argmax(self.pipeline.predict(clean_image), axis = 1)
+        else : 
+            clean_image = normalize(np.asarray(squared_imgs(to_numpy_rgb([resize_img(imgs, RESIZING_DIM)]))))
+            prediction = np.argmax(self.pipeline.predict(clean_image), axis = -1)[0]
         return prediction
