@@ -12,7 +12,7 @@ class Predict():
         self.pipeline = None
         self.model_type = model_type
 
-    def model_init(self, path = "../model_weights/baseline/weights"):
+    def model_init(self, path = "model_weights/baseline/weights"):
         """
         Initialize the model
         by default path = relative path for the website
