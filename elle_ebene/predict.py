@@ -1,6 +1,6 @@
 
 from elle_ebene.baseline_model import initialize_model
-from elle_ebene.simple_preprocessing import resize_img, to_numpy_rgb, squared_imgs, normalize
+from elle_ebene.utils.simple_preprocessing import resize_img, to_numpy_rgb, squared_imgs, normalize
 from elle_ebene.params import RESIZING_DIM
 import numpy as np
 

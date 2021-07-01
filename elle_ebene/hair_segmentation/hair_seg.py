@@ -6,7 +6,7 @@ On n'utilise pas dlib
 from tensorflow.keras import models
 import numpy as np
 
-from elle_ebene.hairnet import get_model
+from elle_ebene.hair_segmentation.hairnet import get_model
 
 class HairSegmenter():
     def __init__(self):
