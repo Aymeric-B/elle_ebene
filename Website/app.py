@@ -3,33 +3,30 @@ from collections import Counter
 from PIL import Image
 import sys
 sys.path.insert(0, '..')
-from elle_ebene.predict import Predict
+from elle_ebene.predict import prediction
 
 st.markdown("""# Découvrez le type de votre chevelure""")
 
 result_list = []
 image_list = []
 titres = []
-
-predictor = Predict()
-predictor.model_init()
-
+            
 # Upload images
 for i in range(3):
     
     uploaded_file = st.file_uploader('',type=['png', 'jpg', 'jpeg'],
                                      key=f"image{i}")
-
+    
     if uploaded_file is not None:
         image = Image.open(uploaded_file)
-        result = predictor.predict(image)
+        result = prediction(image)
         st.write(result)
         result_list.append(result)
         image_list.append(image)
         titres.append(f"image{i+1}")
         st.image(image)
         
-#st.image(image_list, width=200, caption=titres)
+st.image(image_list, width=230, caption=titres)
 
 if st.button("Lancez la recherche"):
 
@@ -56,4 +53,3 @@ if st.button("Lancez la recherche"):
     else:
         st.error(f'Il manque {3-len(image_list)} photo(s). Veuillez en télécharger')
         
-st.write(result_list)
