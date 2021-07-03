@@ -1,10 +1,9 @@
 """https://machinelearningmastery.com/how-to-develop-a-convolutional-neural-network-to-classify-photos-of-dogs-and-cats/"""
 
-from elle_ebene.simple_preprocessing import to_numpy_rgb
-from elle_ebene.simple_preprocessing import squared_imgs
-from elle_ebene.simple_preprocessing import get_images
-from keras.preprocessing.image import ImageDataGenerator
 import os
+from elle_ebene.utils.simple_preprocessing import to_numpy_rgb, squared_imgs, get_images
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+
 
 
 # Home directory

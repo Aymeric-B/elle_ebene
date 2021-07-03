@@ -55,16 +55,22 @@ pypi:
 	@twine upload dist/* -u $(PYPI_USERNAME)
 
 # ----------------------------------
-#      TEST API
+#      PARAMETRES
 # ----------------------------------
 JOB_NAME=<JOB_NAME>
-BUCKET_NAME=<BUCKET_NAME>
 BUCKET_TRAINING_FOLDER=<BUCKET_TRAINING_FOLDER>
 PACKAGE_NAME=elle_ebene
 FILENAME=trainer
+
+GCR_MULTI_REGION=eu.gcr.io
 GCR_REGION=europe-west1
-GCP_PROJECT_ID=elle-ebene-project
+GCE_ZONE=europe-west1-b
+
+PROJECT_ID=elle-ebene-project-318513
+BUCKET_NAME=elle_ebene_bucket
 DOCKER_IMAGE_NAME=elle_ebene_docker
+GCE_INSTANCE_NAME=elle_ebene_instance
+
 
 run_locally:
 	@python -m elle_ebene.trainer
@@ -87,9 +93,28 @@ build_docker_local:
 
 run_docker_local:
 	open http://localhost:8501/
-	docker run -p 8501:8501 $(DOCKER_IMAGE_NAME)
+	docker run -p 8501:8501 -e PORT=8501 $(DOCKER_IMAGE_NAME)
 
-docker_gcp:
-	docker build -t GCR_REGION/GCP_PROJECT_ID/DOCKER_IMAGE_NAME .
-	docker push GCR_REGION/GCP_PROJECT_ID/DOCKER_IMAGE_NAME
+set_project:
+	@gcloud config set project ${PROJECT_ID}
 
+create_bucket:
+	@gsutil mb -l ${GCR_REGION} -p ${PROJECT_ID} gs://${BUCKET_NAME}
+
+build_docker_gcp:
+	docker build -t $(GCR_MULTI_REGION)/$(PROJECT_ID)/$(DOCKER_IMAGE_NAME) .
+
+push_docker_gcp:	
+	docker push $(GCR_MULTI_REGION)/$(PROJECT_ID)/$(DOCKER_IMAGE_NAME)
+
+deploy_docker_gcp:
+	gcloud run deploy --image ${GCR_MULTI_REGION}/${PROJECT_ID}/${DOCKER_IMAGE_NAME} \
+		--platform managed --region ${GCR_REGION}
+
+run_docker_gcp:
+	gcloud compute instances start $(GCE_INSTANCE_NAME) --project $(PROJECT_ID) \
+		--zone $(GCE_ZONE)
+
+stop_docker_gcp:
+	gcloud compute instances stop $(GCE_INSTANCE_NAME) --project $(PROJECT_ID) \
+		--zone $(GCE_ZONE)
