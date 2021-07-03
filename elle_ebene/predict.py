@@ -4,6 +4,8 @@ from elle_ebene.utils.simple_preprocessing import resize_img, to_numpy_rgb, squa
 from elle_ebene.params import RESIZING_DIM
 import numpy as np
 
+predictor = None
+
 class Predict():
     def __init__(self, model_type = "baseline"):
         """
@@ -33,3 +35,15 @@ class Predict():
             clean_image = normalize(np.asarray(squared_imgs(to_numpy_rgb([resize_img(imgs, RESIZING_DIM)]))))
             prediction = np.argmax(self.pipeline.predict(clean_image), axis = -1)[0]
         return prediction
+    
+def prediction(img):
+    
+    global predictor
+    
+    if predictor == None:
+        predictor = Predict()
+        predictor.model_init()
+        print
+    
+    return predictor.predict(img)
+    
