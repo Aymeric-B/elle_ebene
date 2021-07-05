@@ -65,6 +65,7 @@ FILENAME=trainer
 GCR_MULTI_REGION=eu.gcr.io
 GCR_REGION=europe-west1
 GCE_ZONE=europe-west1-b
+SIZE=1024Mi
 
 PROJECT_ID=elle-ebene-project-318513
 BUCKET_NAME=elle_ebene_bucket
@@ -74,16 +75,6 @@ GCE_INSTANCE_NAME=elle_ebene_instance
 
 run_locally:
 	@python -m elle_ebene.trainer
-
-gcp_submit_training:
-	gcloud ai-platform jobs submit training ${JOB_NAME} \
-		--job-dir gs://${BUCKET_NAME}/${BUCKET_TRAINING_FOLDER} \
-		--package-path ${PACKAGE_NAME} \
-		--module-name ${PACKAGE_NAME}.${FILENAME} \
-		--python-version=${PYTHON_VERSION} \
-		--runtime-version=${RUNTIME_VERSION} \
-		--region europe-west1 \
-		--stream-logs
 
 run_streamlit:
 	streamlit run Website/app.py
@@ -109,12 +100,11 @@ push_docker_gcp:
 
 deploy_docker_gcp:
 	gcloud run deploy --image ${GCR_MULTI_REGION}/${PROJECT_ID}/${DOCKER_IMAGE_NAME} \
-		--platform managed --region ${GCR_REGION}
+		--platform managed --region ${GCR_REGION} --memory ${SIZE}
 
 run_docker_gcp:
 	gcloud compute instances start $(GCE_INSTANCE_NAME) --project $(PROJECT_ID) \
 		--zone $(GCE_ZONE)
 
 stop_docker_gcp:
-	gcloud compute instances stop $(GCE_INSTANCE_NAME) --project $(PROJECT_ID) \
-		--zone $(GCE_ZONE)
+	gcloud run services delete ${DOCKER_IMAGE_NAME} --region ${GCR_REGION}
