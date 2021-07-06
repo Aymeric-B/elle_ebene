@@ -1,7 +1,7 @@
 
 from elle_ebene.data import clean_images
 from elle_ebene.baseline_model import initialize_model_base
-from elle_ebene.model1 import initialize_model1
+from elle_ebene.model1 import initialize_model_1
 from elle_ebene.utils.simple_preprocessing import resize_img, to_numpy_rgb, squared_imgs, normalize
 from elle_ebene.hair_segmentation.hair_seg import HairSegmenter
 from elle_ebene.params import RESIZING_DIM, MODEL_USED
