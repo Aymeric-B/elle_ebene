@@ -21,7 +21,7 @@ type4_imgs_rgb = to_numpy_rgb(type4_imgs)
 type3_imgs_squared = squared_imgs(type3_imgs_rgb)
 type4_imgs_squared = squared_imgs(type4_imgs_rgb)
 
-def data_gen(path_pic, batch_size, model):
+def data_gen(path_pic, batch_size, X_train):
 #Generate batches of tensor image data with real-time data augmentation.
 #The data will be looped over (in batches so the size should be choosen in according to dataset size)
     train_path = os.path.join(path_pic,'train')
@@ -37,7 +37,7 @@ def data_gen(path_pic, batch_size, model):
         cval = 255.,
         brightness_range=[0.6,1.8]) 
 # No data augmentation to validation data   
-    valid_datagen = ImageDataGenerator()
+#    valid_datagen = ImageDataGenerator()
 
 # ImageDataGenerator flow_from_directory pulls files one after another from a specific directory
     train_generator = datagen.flow_from_directory(
@@ -49,22 +49,15 @@ def data_gen(path_pic, batch_size, model):
     
     train_generator.next()
     
-    validation_generator = valid_datagen.flow_from_directory(
-        directory=val_path, 
-        color_mode="rgb", 
-        batch_size=batch_size,
-        class_mode='binary')
-
-# training the model   
-    total_images = train_generator.n  
-    steps = total_images//batch_size    
+    datagen.fit(X_train)
     
-    model.fit_generator(  #vs a .fit because we have data augmentation
-        train_generator,
-        steps_per_epoch=steps, # where is the train data?
-        epochs=50,
-        validation_data=validation_generator,
-        validation_steps=800)
+    # validation_generator = valid_datagen.flow_from_directory(
+    #     directory=val_path, 
+    #     color_mode="rgb", 
+    #     batch_size=batch_size,
+    #     class_mode='binary') 
+    
+  
     
     return train_generator, validation_generator
 # After you have created and configured your ImageDataGenerator, you must fit it on your data. 
