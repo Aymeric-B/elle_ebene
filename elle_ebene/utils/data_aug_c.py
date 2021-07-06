@@ -1,6 +1,6 @@
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
-class Hairgenerator():
+class HairGenerator():
     def __init__(self):
         self.hairdatagen = None
         self.hair_flow = None

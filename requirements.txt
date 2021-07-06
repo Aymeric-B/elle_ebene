@@ -8,6 +8,7 @@ wheel>=0.29
 numpy == 1.19.5
 pandas
 scikit-learn
+scipy
 tensorflow == 2.5.0
 matplotlib
 

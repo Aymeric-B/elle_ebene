@@ -9,7 +9,7 @@ from elle_ebene.data import get_data_locally
 from tensorflow.keras.callbacks import EarlyStopping
 from elle_ebene.gcp import storage_upload
 
-def initialize_model():
+def initialize_model_base():
    
     model  = models.Sequential()
     
