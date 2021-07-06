@@ -23,7 +23,7 @@ class Predict():
         Initialize the model
         by default path = relative path for the website
         """
-        path = os.join("model_weights", MODEL_USED, "weights")
+        path = os.path.join("model_weights", MODEL_USED, "weights")
         if MODEL_USED == "baseline":
             self.pipeline = initialize_model_base()
         elif MODEL_USED == "seg_aug":
