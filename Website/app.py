@@ -25,6 +25,9 @@ for i in range(3):
         
         image = Image.open(uploaded_file)
         
+        # Hide filename on UI
+        st.markdown('''<style>.uploadedFile {display: none}<style>''', unsafe_allow_html=True)
+        
         exif = image.getexif()
         if exif != None:
             exif = {ExifTags.TAGS[k]: v
