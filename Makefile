@@ -70,7 +70,7 @@ SIZE=1024Mi
 PROJECT_ID=elle-ebene-project-318513
 BUCKET_NAME=elle_ebene_bucket
 DOCKER_IMAGE_NAME=elle_ebene_docker
-GCE_INSTANCE_NAME=elle_ebene_instance
+GCP_INSTANCE_NAME=elleebenedocker
 
 
 run_locally:
@@ -99,12 +99,8 @@ push_docker_gcp:
 	docker push $(GCR_MULTI_REGION)/$(PROJECT_ID)/$(DOCKER_IMAGE_NAME)
 
 deploy_docker_gcp:
-	gcloud run deploy --image ${GCR_MULTI_REGION}/${PROJECT_ID}/${DOCKER_IMAGE_NAME} \
-		--platform managed --region ${GCR_REGION} --memory ${SIZE}
-
-run_docker_gcp:
-	gcloud compute instances start $(GCE_INSTANCE_NAME) --project $(PROJECT_ID) \
-		--zone $(GCE_ZONE)
+	gcloud run deploy ${GCP_INSTANCE_NAME} --image ${GCR_MULTI_REGION}/${PROJECT_ID}/${DOCKER_IMAGE_NAME} \
+		--allow-unauthenticated --platform managed --region ${GCR_REGION} --memory ${SIZE}
 
 stop_docker_gcp:
-	gcloud run services delete ${DOCKER_IMAGE_NAME} --region ${GCR_REGION}
+	gcloud run services delete ${GCP_INSTANCE_NAME} --region ${GCR_REGION} --async
