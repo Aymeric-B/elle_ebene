@@ -2,6 +2,7 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 class HairGenerator():
     """basic data augmentation generator"""
+
     def __init__(self):
         self.hairdatagen = None
         self.hair_flow = None
@@ -32,4 +33,3 @@ class HairGenerator():
         self.hairdatagen.fit(X)
      
         self.hair_flow = self.hairdatagen.flow(X, y, batch_size=batch_size)
-        

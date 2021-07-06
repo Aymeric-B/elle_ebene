@@ -1,27 +1,32 @@
 
-from elle_ebene.baseline_model import initialize_model
+from elle_ebene.baseline_model import initialize_model_base
+from elle_ebene.model1 import initialize_model1
 from elle_ebene.utils.simple_preprocessing import resize_img, to_numpy_rgb, squared_imgs, normalize
-from elle_ebene.params import RESIZING_DIM
+from elle_ebene.params import RESIZING_DIM, MODEL_USED
 import numpy as np
+import os
 
 predictor = None
 
 class Predict():
-    def __init__(self, model_type = "baseline"):
+    def __init__(self):
         """
             model_type = nom du modèle choisi, par défault 'baseline'
         """
         self.pipeline = None
-        self.model_type = model_type
 
     def model_init(self, path = "model_weights/baseline/weights"):
         """
         Initialize the model
         by default path = relative path for the website
         """
-        if self.model_type == "baseline":
-            self.pipeline = initialize_model()
-            self.pipeline.load_weights(path)
+        path = os.join("model_weights", MODEL_USED, "weights")
+        if MODEL_USED == "baseline":
+            self.pipeline = initialize_model_base()
+        elif MODEL_USED == "seg_aug":
+            self.pipeline = initialize_model1()
+
+        self.pipeline.load_weights(path)
 
 
     def predict(self, imgs):
