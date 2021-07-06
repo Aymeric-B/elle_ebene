@@ -18,18 +18,18 @@ class Predict():
         self.pipeline = None
         self.segmenter = None
 
-    def model_init(self, path = "model_weights/baseline/weights"):
+    def model_init(self, path = os.path.join("model_weights", MODEL_USED, "weights")):
         """
         Initialize the model
         by default path = relative path for the website
         """
-        path = os.path.join("model_weights", MODEL_USED, "weights")
+        weights_path = os.path.join(path)
         if MODEL_USED == "baseline":
             self.pipeline = initialize_model_base()
         elif MODEL_USED == "seg_aug":
             self.pipeline = initialize_model_1()
 
-        self.pipeline.load_weights(path)
+        self.pipeline.load_weights(weights_path)
 
         self.segmenter = HairSegmenter()
         self.segmenter.model_init()
@@ -41,11 +41,11 @@ class Predict():
         """
         if isinstance(imgs, list):
             clean_image = normalize(np.asarray(squared_imgs(to_numpy_rgb([resize_img(img, RESIZING_DIM) for img in imgs]))))
-            segmented_images = self.segmenter.get_hairs(clean_image)
+            segmented_images = np.asarray(self.segmenter.get_hairs(clean_image))
             prediction = np.argmax(self.pipeline.predict(segmented_images), axis = 1)
         else : 
             clean_image = normalize(np.asarray(squared_imgs(to_numpy_rgb([resize_img(imgs, RESIZING_DIM)]))))
-            segmented_images = self.segmenter.get_hairs(clean_image)
+            segmented_images = np.asarray(self.segmenter.get_hairs(clean_image))
             prediction = np.argmax(self.pipeline.predict(segmented_images), axis = -1)[0]
         return prediction
 
