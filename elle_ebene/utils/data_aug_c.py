@@ -15,9 +15,9 @@ class HairGenerator():
                 width_shift_range = 0.1,
                 height_shift_range = 0.1,
                 horizontal_flip = True,
-                vertical_flip = True,
+                vertical_flip = False,
                 fill_mode = 'constant',
-                cval = 255.,
+                cval = 0,
                 brightness_range = None
                 ):
         self.hairdatagen = ImageDataGenerator(
