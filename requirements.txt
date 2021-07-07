@@ -32,3 +32,4 @@ PyWavelets
 
 # Website
 streamlit
+watchdog
