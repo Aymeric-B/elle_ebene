@@ -1,5 +1,5 @@
+#predict.py
 
-from elle_ebene.data import clean_images
 from elle_ebene.baseline_model import initialize_model_base
 from elle_ebene.model1 import initialize_model_1
 from elle_ebene.utils.simple_preprocessing import resize_img, to_numpy_rgb, squared_imgs, normalize
