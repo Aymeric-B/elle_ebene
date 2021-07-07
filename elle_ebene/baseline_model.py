@@ -2,12 +2,9 @@
 Creation of a baseline model and record the weights
 """
 
-import numpy as np
 from tensorflow.keras import layers
 from tensorflow.keras import models
-from elle_ebene.data import get_data_locally
 from tensorflow.keras.callbacks import EarlyStopping
-from elle_ebene.gcp import storage_upload
 
 def initialize_model_base():
    
@@ -54,14 +51,3 @@ def train(model):
     model.fit(X_train, y_train, validation_split = 0.2,
           epochs=200, batch_size=8, verbose=1, callbacks = [es])
     return model
-
-
-if __name__ == "__main__":
-    # Get and clean data
-    X_train, X_test, y_train, y_test = get_data_locally()
-    # Train and save model, locally and
-    model = initialize_model()
-    trained_model = train(model)
-    trained_model.save_weights("weights/baseline_weights")
-    storage_upload("weights/baseline_weights")
-
