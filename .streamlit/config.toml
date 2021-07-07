@@ -9,7 +9,7 @@ showfileUploaderEncoding = false
 [theme]
 
 primaryColor = "#66735F"
-backgroundColor = "#D2C8BA"
+backgroundColor = "#FFFFFF"
 secondaryBackgroundColor = "#EBD2B9"
 textColor = "#6E7074"
 font = "sans serif"

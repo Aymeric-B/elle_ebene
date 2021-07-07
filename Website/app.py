@@ -5,29 +5,39 @@ import sys
 sys.path.insert(0, '..')
 from elle_ebene.predict import prediction
 
+# Count most frequent value in a list
 def most_frequent(liste):
     count_occurence = Counter(liste)
     return count_occurence.most_common(1)[0][0]
 
+# Page formatting
+st.set_page_config(layout="wide")
+st.markdown(f"""<style>
+                .reportview-container .main .block-container{{
+                    padding-top: 0rem}}
+                </style>""", unsafe_allow_html=True)
+
+# Display title and logo
 logo = Image.open('Website/logo.png')
 st.image(logo, output_format='PNG')
-st.write("-> [Notre site](https://elleebene.com/)")
 st.markdown("""# Découvrez le type de votre chevelure""")
 
+# Prepare image uploading
 result_list = []
 image_list = []
 rotation = {1: 0, 3: 180, 6: 270, 8: 90}
 visage = ['face', 'profil', 'dos']
-commentaire = ["Prenez une photo de votre visage bien encadré par vos cheveux",
+titres =[f'Photo de {side}' for side in visage]
+commentaires = ["Prenez une photo de votre visage bien encadré par vos cheveux",
                "N'attachez pas vos cheveux",
                "Présentez bien toute l'envergure de vos cheveux"]
-        
-# Upload images
+
+# Upload images in sidebar
 st.sidebar.markdown("""## Téléchargez vos photos :""")
 for i in range(3):
     
-    uploaded_file = st.sidebar.file_uploader(f"Photo de {visage[i]}",type=['png', 'jpg', 'jpeg'],
-                                     key=f"image{i}", help=f"{commentaire[i]}")
+    uploaded_file = st.sidebar.file_uploader(titres[i],type=['png', 'jpg', 'jpeg'],
+                                     key=titres[i], help=f"{commentaires[i]}")
     
     if uploaded_file is not None:
         
@@ -36,6 +46,7 @@ for i in range(3):
         # Hide filename on UI
         st.markdown('''<style>.uploadedFile {display: none}<style>''', unsafe_allow_html=True)
         
+        # Prepare images to be displayed according to photo EXIF data
         exif = image.getexif()
         if exif != None:
             exif = {ExifTags.TAGS[k]: v
@@ -45,21 +56,18 @@ for i in range(3):
                 image = image.rotate(rotation[exif.get('Orientation', 1)], expand=True)
         
         image_list.append(image)
-        
-        #width, height = image.size
-        #width, height = int(width*300/height), 300
-        #image = image.resize((width, height))
-        
-        #st.image(image)
 
-st.image(image_list, width=232)
+# Display bottom sidebar information
+basdepage = Image.open('Website/basdepage.png')
+st.sidebar.image(basdepage, output_format='PNG')
+st.sidebar.write("    -> [Notre site](https://elleebene.com/)")
 
+# Launch prediction
 if st.button("Lancez la recherche"):
 
     if len(image_list) == 3:
 
         result_list = [prediction(image) for image in image_list]
-        
         res = most_frequent(result_list)
         
         if res == 0:
@@ -68,7 +76,6 @@ if st.button("Lancez la recherche"):
             result = "type 4"
         
         chevelure = "Votre chevelure est de " + result    
-        
         if sum(result_list) == 0 or sum(result_list) == 3:
             st.success(chevelure)
         else:
@@ -79,4 +86,6 @@ if st.button("Lancez la recherche"):
     else:
         
         st.error(f'Il manque {3-len(image_list)} photo(s). Veuillez en télécharger')
-        
+
+# Display uploaded images
+st.image(image_list, width=312)
