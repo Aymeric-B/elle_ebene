@@ -1,5 +1,5 @@
+#predict.py
 
-from elle_ebene.data import clean_images
 from elle_ebene.baseline_model import initialize_model_base
 from elle_ebene.model1 import initialize_model_1
 from elle_ebene.utils.simple_preprocessing import resize_img, to_numpy_rgb, squared_imgs, normalize
@@ -40,13 +40,15 @@ class Predict():
         prends en entrée une image ou liste d'images sous format PIL Image
         """
         if isinstance(imgs, list):
-            clean_image = normalize(np.asarray(squared_imgs(to_numpy_rgb([resize_img(img, RESIZING_DIM) for img in imgs]))))
+            clean_image = np.asarray(squared_imgs(to_numpy_rgb([resize_img(img, RESIZING_DIM) for img in imgs])))
             segmented_images = np.asarray(self.segmenter.get_hairs(clean_image))
-            prediction = np.argmax(self.pipeline.predict(segmented_images), axis = 1)
+            normalized_images = normalize(segmented_images)
+            prediction = np.argmax(self.pipeline.predict(normalized_images), axis = 1)
         else : 
-            clean_image = normalize(np.asarray(squared_imgs(to_numpy_rgb([resize_img(imgs, RESIZING_DIM)]))))
+            clean_image = np.asarray(squared_imgs(to_numpy_rgb([resize_img(imgs, RESIZING_DIM)])))
             segmented_images = np.asarray(self.segmenter.get_hairs(clean_image))
-            prediction = np.argmax(self.pipeline.predict(segmented_images), axis = -1)[0]
+            normalized_images = normalize(segmented_images)            
+            prediction = np.argmax(self.pipeline.predict(normalized_images), axis = -1)[0]
         return prediction
 
 def prediction(img):

@@ -9,21 +9,32 @@ def most_frequent(liste):
     count_occurence = Counter(liste)
     return count_occurence.most_common(1)[0][0]
 
+logo = Image.open('Website/logo.png')
+st.image(logo, output_format='PNG')
+st.write("-> [Notre site](https://elleebene.com/)")
 st.markdown("""# Découvrez le type de votre chevelure""")
 
 result_list = []
 image_list = []
 rotation = {1: 0, 3: 180, 6: 270, 8: 90}
+visage = ['face', 'profil', 'dos']
+commentaire = ["Prenez une photo de votre visage bien encadré par vos cheveux",
+               "N'attachez pas vos cheveux",
+               "Présentez bien toute l'envergure de vos cheveux"]
         
 # Upload images
+st.sidebar.markdown("""## Téléchargez vos photos :""")
 for i in range(3):
     
-    uploaded_file = st.file_uploader('',type=['png', 'jpg', 'jpeg'],
-                                     key=f"image{i}")
+    uploaded_file = st.sidebar.file_uploader(f"Photo de {visage[i]}",type=['png', 'jpg', 'jpeg'],
+                                     key=f"image{i}", help=f"{commentaire[i]}")
     
     if uploaded_file is not None:
         
         image = Image.open(uploaded_file)
+        
+        # Hide filename on UI
+        st.markdown('''<style>.uploadedFile {display: none}<style>''', unsafe_allow_html=True)
         
         exif = image.getexif()
         if exif != None:
@@ -63,7 +74,7 @@ if st.button("Lancez la recherche"):
         else:
             st.warning(chevelure)
         
-        
+        st.balloons()
         
     else:
         

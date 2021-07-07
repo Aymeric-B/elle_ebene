@@ -1,0 +1,27 @@
+# Fichier de configuration streamlit
+
+[deprecation]
+
+# Set to false to disable the deprecation warning for the file uploader encoding.
+# Default: true
+showfileUploaderEncoding = false
+
+[theme]
+
+primaryColor = "#66735F"
+backgroundColor = "#D2C8BA"
+secondaryBackgroundColor = "#EBD2B9"
+textColor = "#6E7074"
+font = "sans serif"
+
+[server]
+
+# Max size, in megabytes, for files uploaded with the file_uploader.
+# Default: 200
+maxUploadSize = 10
+
+[browser]
+
+# Whether to send usage statistics to Streamlit.
+# Default: true
+gatherUsageStats = false
