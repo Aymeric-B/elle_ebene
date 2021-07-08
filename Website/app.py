@@ -14,7 +14,9 @@ def most_frequent(liste):
 st.set_page_config(layout="wide")
 st.markdown(f"""<style>
                 .reportview-container .main .block-container{{
-                    padding-top: 0rem}}
+                    padding-top: 5px}}
+                .reportview-container .css-yleahc {{
+                    padding-top:20px}}
                 </style>""", unsafe_allow_html=True)
 
 # Display title and logo
@@ -23,7 +25,7 @@ st.image(logo, output_format='PNG')
 st.markdown("""# Découvrez le type de votre chevelure""")
 
 # Prepare image uploading
-result_list = []
+result = ''
 image_list = []
 rotation = {1: 0, 3: 180, 6: 270, 8: 90}
 visage = ['face', 'profil', 'dos']
@@ -67,21 +69,22 @@ if st.button("Lancez la recherche"):
 
     if len(image_list) == 3:
 
+        # Prediction on each image and vote
         result_list = [prediction(image) for image in image_list]
         res = most_frequent(result_list)
         
+        # Display preparation
         if res == 0:
             result = "type 3"
         else:
             result = "type 4"
-        
-        chevelure = "Votre chevelure est de " + result    
+        chevelure = "Votre chevelure est de " + result
+          
+        # Display result
         if sum(result_list) == 0 or sum(result_list) == 3:
-            st.success(chevelure)
+            st.success(chevelure)   
         else:
             st.warning(chevelure)
-        
-        st.balloons()
         
     else:
         
@@ -89,3 +92,9 @@ if st.button("Lancez la recherche"):
 
 # Display uploaded images
 st.image(image_list, width=312)
+
+if len(image_list) == 3 and result != '':
+    # Display hair segmentation types
+    typologie = Image.open('Website/curls_large.jpeg')
+    st.image(typologie, output_format='JPEG')
+
