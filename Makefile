@@ -25,13 +25,13 @@ FILENAME=trainer
 GCR_MULTI_REGION=eu.gcr.io
 GCR_REGION=europe-west1
 GCE_ZONE=europe-west1-b
-SIZE=2048Mi
-CONCURRENCY=80
 
 PROJECT_ID=elle-ebene-project-318513
 BUCKET_NAME=elle_ebene_bucket
 DOCKER_IMAGE_NAME=elle_ebene_docker
 GCP_INSTANCE_NAME=elleebenedocker
+SIZE=2048Mi
+CONCURRENCY=80
 
 # ----------------------------------
 #      PARAMETRAGE GCP
