@@ -25,7 +25,8 @@ FILENAME=trainer
 GCR_MULTI_REGION=eu.gcr.io
 GCR_REGION=europe-west1
 GCE_ZONE=europe-west1-b
-SIZE=1024Mi
+SIZE=2048Mi
+CONCURRENCY=80
 
 PROJECT_ID=elle-ebene-project-318513
 BUCKET_NAME=elle_ebene_bucket
@@ -72,7 +73,8 @@ push_docker_gcp:
 
 deploy_docker_gcp:
 	gcloud run deploy ${GCP_INSTANCE_NAME} --image ${GCR_MULTI_REGION}/${PROJECT_ID}/${DOCKER_IMAGE_NAME} \
-		--allow-unauthenticated --platform managed --region ${GCR_REGION} --memory ${SIZE}
+		--allow-unauthenticated --platform managed --region ${GCR_REGION} --memory ${SIZE} \
+		--concurrency ${CONCURRENCY}
 
 stop_docker_gcp:
 	gcloud run services delete ${GCP_INSTANCE_NAME} --region ${GCR_REGION} --async
