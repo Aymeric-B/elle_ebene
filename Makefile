@@ -30,6 +30,7 @@ PROJECT_ID=elle-ebene-project-318513
 BUCKET_NAME=elle_ebene_bucket
 DOCKER_IMAGE_NAME=elle_ebene_docker
 GCP_INSTANCE_NAME=elleebenedocker
+LOCAL_INSTANCE_NAME=elleebeneinstance 
 SIZE=2048Mi
 CONCURRENCY=80
 
@@ -58,8 +59,13 @@ build_docker_local:
 	docker build -t $(DOCKER_IMAGE_NAME) .
 
 run_docker_local:
+	docker create -p 8501:8501 -e PORT=8501 --name=$(LOCAL_INSTANCE_NAME) $(DOCKER_IMAGE_NAME)
+	docker start $(LOCAL_INSTANCE_NAME)
 	open http://localhost:8501/
-	docker run -p 8501:8501 -e PORT=8501 $(DOCKER_IMAGE_NAME)
+
+stop_docker_local:
+	docker kill $(LOCAL_INSTANCE_NAME)
+	docker rm $(LOCAL_INSTANCE_NAME)
 
 # ----------------------------------
 #      WEBSITE SUR DOCKER GCP
