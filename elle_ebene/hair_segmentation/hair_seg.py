@@ -7,22 +7,31 @@ from tensorflow.keras import models
 import numpy as np
 
 from elle_ebene.hair_segmentation.hairnet import get_model
+from elle_ebene.hair_segmentation.curliqnet import get_unet
 
 class HairSegmenter():
     def __init__(self):
         """
-            model_type = nom du modèle choisi, par défault 'baseline'
+            classe permettant de gérer la segmentation
         """
         self.model = None
         
 
-    def model_init(self, path = "model_weights/hair_seg/weights"):
+    def model_init(self, type = "hairnet", path = "model_weights/hairnet/weights"):
         """
         Initialize the model
         by default path = relative path for the website
+        type = hairnet or curliqnet
         """
-        self.model = get_model()
-        self.model.load_weights(path)
+        if type == "hairnet":
+            self.model = get_model()
+            self.model.load_weights(path)
+        elif type == "curliqnet":
+            self.model = get_unet()
+            self.model.load_weights(path)
+        else:
+            raise ValueError("Wrong type of model")
+        
 
     def get_hair_from_mask(self, mask, image):
         """
